@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main {
+  background: rgb(196,198,185);
+  background: linear-gradient(76deg, rgba(196,198,185,1) 1%, rgba(117,117,117,1) 81%);
+}
+
+/* body {background-color: F8F8F} */
+
+  
+body, .bg {
+  background: #E6DADA;  /* fallback for old browsers */
+  background: linear-gradient(to bottom, #e2e8f0, #64748b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-attachment: fixed;
+}
+
