@@ -5,7 +5,7 @@ import { useReducer, useEffect, createContext } from 'react';
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-  const initialState = { notify: {}, setfreq: [], setsoffreq: []};;
+  const initialState = { notify: {}, setfreq: [], setsoffreq: [], setarmonici:[]};;
   const [state, dispatch] = useReducer(reducers, initialState);
   // const { auth } = state 
 

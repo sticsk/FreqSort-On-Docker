@@ -2,19 +2,18 @@
 const nextConfig = {
   reactStrictMode: true,
   // basePath: "/login",
-  swcMinify: true,
+  // swcMinify: true,
 }
-
+// module.exports = {
+//   async redirects() {
+//     return [
+//       {
+//         source: '/',
+//         destination: '/login',
+//         permanent: false,
+//       },
+//     ]
+//   },
+// }
 
 module.exports = nextConfig
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/login',
-        permanent: true,
-      },
-    ]
-  },
-}

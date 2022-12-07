@@ -10,16 +10,20 @@ export default function Manager() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	const [farr, setFarr] = useState([]);
+
 	const initialState = {
 		frecventa: "",
 		banda: "",
+		putere:"",
+		distanta:""
 	};
 	const [fdata, setFdata] = useState(initialState);
-	const { frecventa, banda } = fdata;
+	const { frecventa, banda,putere,distanta } = fdata;
 
 	const handleChangeInput = (e) => {
 		const { name, value } = e.target;
 		setFdata({ ...fdata, [name]: value });
+		console.log(farr)
 	};
 	const handleSubmit = async (x) => {
 		x.preventDefault();
@@ -34,21 +38,21 @@ export default function Manager() {
 
 			return;
 		}
-		if (frecventa < 30 || frecventa > 108) {
+		if (frecventa < 30 || frecventa > 10000) {
 			dispatch({
 				type: "NOTIFY",
 				payload: {
-					error: "Frecventa > 30 Mhz si < 108 Mhz",
+					error: "Frecventa > 30 Mhz si < 10000 Mhz",
 				},
 			});
 			setFdata(initialState);
 			return;
 		}
-		if (banda < 5 || banda > 200) {
+		if (banda < 5 || banda > 5000) {
 			dispatch({
 				type: "NOTIFY",
 				payload: {
-					error: "Banda > 5 KHz si < 200 KHz",
+					error: "Banda > 5 KHz si < 5000 KHz",
 				},
 			});
 			setFdata(initialState);
@@ -61,7 +65,7 @@ export default function Manager() {
 			},
 		});
 
-		setFarr([...farr, { frecventa: frecventa, band: banda }]);
+		setFarr([...farr, { frecventa, band: banda, putere,distanta }]);
 	};
 	useEffect(() => {
 		dispatch({
@@ -95,7 +99,7 @@ export default function Manager() {
 			{/* ---------- > End Meniu + Submeniu */}
 
 			<div className="">
-				<div className=" md:w-3/5 xl:w-2/5 mx-auto text-center pr-3 border-slate-400 md:col-span-3 col-span-6  ">
+				<div className="w-11/12 md:w-3/5 xl:w-2/5 mx-auto text-center pr-3 border-slate-400 md:col-span-3 col-span-6  ">
 					<form>
 						<div className="flex mr-1.5 -ml-0.5 ">
 							<div className="mb-2 w-1/2 ">
@@ -112,7 +116,7 @@ export default function Manager() {
 									name="frecventa"
 									id="email"
 									className=" border w-full  border-blue-900 ml-2  text-slate-200 text-sm rounded-lg bg-gray-700  block p-2.5 "
-									placeholder="30 - 108 Mhz"
+									placeholder="30 - 10000 MHz"
 									required
 								></input>{" "}
 							</div>
@@ -121,7 +125,7 @@ export default function Manager() {
 									htmlFor="password"
 									className="block  mb-2 px-1 font-bold pt-1 text-md text-gray-900 "
 								>
-									Banda ( KHz )
+									Banda ( kHz )
 								</label>
 								<input
 									type="number"
@@ -129,7 +133,46 @@ export default function Manager() {
 									name="banda"
 									onChange={handleChangeInput}
 									id="password"
-									placeholder="5 - 200 Khz"
+									placeholder="5 - 5000 KHz"
+									className=" border w-full ml-3 text-slate-200 border-blue-900  text-sm rounded-lg bg-gray-700  p-2.5 "
+									required
+								></input>{" "}
+							</div>
+						</div>
+
+						<div className="flex mr-1.5 pb-5 -ml-0.5 -mt-6 ">
+							<div className="mb-2 w-1/2 ">
+								<label
+									htmlFor="email"
+									className="block  mb-2 px-1 font-bold pt-1 text-md  text-gray-900 "
+								>
+									Putere ( w )
+								</label>
+								<input
+									type="number"
+									onChange={handleChangeInput}
+									value={putere}
+									name="putere"
+									id="email"
+									className=" border w-full  border-blue-900 ml-2  text-slate-200 text-sm rounded-lg bg-gray-700  block p-2.5 "
+									placeholder="- 200   -   200 w"
+									required
+								></input>{" "}
+							</div>
+							<div className="mb-6 w-1/2">
+								<label
+									htmlFor="password"
+									className="block  mb-2 px-1 font-bold pt-1 text-md text-gray-900 "
+								>
+									Distanta ( m )
+								</label>
+								<input
+									type="number"
+									value={distanta}
+									name="distanta"
+									onChange={handleChangeInput}
+									id="password"
+									placeholder="1   -   2000 Km"
 									className=" border w-full ml-3 text-slate-200 border-blue-900  text-sm rounded-lg bg-gray-700  p-2.5 "
 									required
 								></input>{" "}
@@ -139,7 +182,7 @@ export default function Manager() {
 							<button
 								type="submit"
 								onClick={handleSubmit}
-								className="text-white shadow-xl -mt-0.5 py-2.5 mb-2 text-sm font-bold md:whitespace-nowrap w-full  ml-1.5 bg-green-700 border-2 hover:border-green-500 border-green-600 rounded-lg"
+								className="text-white  shadow-xl -mt-0.5 py-2.5 mb-2 text-sm font-bold md:whitespace-nowrap w-full  ml-1.5 bg-green-700 border-2 hover:border-green-500 border-green-600 rounded-lg"
 							>
 								Adauga Frecventa
 							</button>
@@ -158,9 +201,9 @@ export default function Manager() {
 						</div>
 					</form>
 					{/* --------->  start Table Freq  */}
-					<div>
-						<div className="rounded-sm ml-2 mt-4 static  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-600 scrollbar-track-gray-300 overflow-y-auto h-[60vh] -mr-2 ">
-							<h2 className="pb-2 text-2xl font-bold tracking-wide">Tabel frecvente alocate</h2>
+					<div>							<h2 className="pb-3 ml-3  mt-4 border-t-4 border-gray-700 text-2xl font-bold tracking-wide">Tabel frecvente alocate</h2>
+
+						<div className="rounded-sm ml-2  static  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-600 scrollbar-track-gray-300 overflow-y-auto h-[60vh] -mr-2 ">
 
 							<table className=" table w-full border-2 border-gray-700 font-medium bg-slate-400">
 								<thead className="sticky  top-0 z-5 bg-slate-400 border-b border-gray-800">
@@ -215,9 +258,6 @@ export default function Manager() {
 				</div>
 				{/* --------->  finish Table Freq  */}
 			</div>
-			
-
-
 		</div>
 	);
 }

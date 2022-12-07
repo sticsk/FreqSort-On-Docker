@@ -16,6 +16,11 @@ const reducers = (state, action) => {
           ...state,
           setsoffreq: action.payload,
         };
+        case ACTIONS.ARMONICI:
+        return {
+          ...state,
+          setarmonici: action.payload,
+        };
     default:
       return state;
   }

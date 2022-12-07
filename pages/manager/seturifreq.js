@@ -45,7 +45,7 @@ export default function Manager() {
 					{setsarr.map((x, i) => {
 
 						return (
-							<div key={i} className="w-4/5 mx-auto my-10">
+							<div key={i} className="md:w-3/5 w-4/5 mx-auto my-10">
 								<p className="text-xl font-bold text-green-700 text-center pb-2 ">Setul {i+1} de frecvente </p>
 							<table className=" radius-xl table w-full  border-2  border-gray-700 font-medium bg-slate-400">
 							<thead className="sticky  top-0 z-5 bg-slate-400 border-b border-gray-800">
