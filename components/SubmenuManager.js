@@ -11,7 +11,7 @@ export default function SubmenuManager() {
     className="flex  justify-center shadow-2xl bg-slate-700 "
     role="group"
   >
-    <div className="bg-slate-700  md:my-2 my-1 rounded-xl">
+    <div className="bg-slate-700 text-center md:my-2 my-1 rounded-xl">
       <Link
         href="/manager"
         type="button"
@@ -19,7 +19,7 @@ export default function SubmenuManager() {
           (path == '/manager'
             ? "bg-green-700 "
             : "bg-gray-700 ") +
-            " inline-flex text-center rounded-md hover:scale-105 md:w-48  w-28 items-center py-1  pl-2.5 md:py-2 md:px-4 text-sm font-normal text-gray-900 border mr-2  border-white dark:text-white "
+            " inline-flex text-center rounded-md hover:scale-105 md:w-48 mb-1 w-2/5 items-center py-1  pl-2.5 md:py-2 md:px-4 text-sm font-normal text-gray-900 border mr-2  border-white dark:text-white "
           }	>        <svg
           aria-hidden="true"
           className="mr-2 md:w-4 hidden md:block h-4 fill-current"
@@ -42,7 +42,7 @@ export default function SubmenuManager() {
           (path == '/manager/procesare'
             ? "bg-green-700 "
             : "bg-gray-700 ") +
-            " inline-flex text-center rounded-md hover:scale-105 md:w-48  w-28 items-center py-1  pl-2 md:py-2 md:px-4 text-sm font-normal text-gray-900 border mr-2  border-white dark:text-white "
+            " inline-flex text-center rounded-md hover:scale-105 md:w-48  w-2/5 items-center py-1  pl-2 md:py-2 md:px-4 text-sm font-normal text-gray-900 border mr-2  border-white dark:text-white "
         }
       >
         <svg
@@ -62,7 +62,7 @@ export default function SubmenuManager() {
           (path == '/manager/seturifreq'
             ? "bg-green-700 "
             : "bg-gray-700 ") +
-            " inline-flex text-center rounded-md hover:scale-105 md:w-48  w-28 items-center py-1  pl-1.5 md:py-2 md:px-4 text-sm font-normal text-gray-900 border mr-2  border-white dark:text-white "
+            " inline-flex  text-center rounded-md hover:scale-105 md:w-48   w-2/5 items-center py-1  pl-1.5 md:py-2 md:px-4 text-sm font-normal text-gray-900 border mr-2  border-white dark:text-white "
           }	>
         <svg
           aria-hidden="true"
@@ -85,7 +85,7 @@ export default function SubmenuManager() {
           (path == '/manager/armonici'
             ? "bg-green-700 "
             : "bg-gray-700 ") +
-            " inline-flex text-center rounded-md hover:scale-105 md:w-28  w-28 items-center py-1  pl-1.5 md:py-2 md:px-4 text-sm font-normal text-gray-900 border mr-2  border-white dark:text-white "
+            " inline-flex text-center rounded-md hover:scale-105 md:w-28 w-2/5 items-center py-1  pl-1.5 md:py-2 md:px-4 text-sm font-normal text-gray-900 border mr-2  border-white dark:text-white "
           }	>
          <svg
           aria-hidden="true"

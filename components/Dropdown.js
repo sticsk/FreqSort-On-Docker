@@ -48,14 +48,14 @@ const Dropdown = ({ color }) => {
 							className={
 								(dropdownPopoverShow ? " " : "hidden ") +
 								(color === "white" ? "bg-slate-300 " : bgColor + " ") +
-								" z-50 py-2 p-2  list-none text-left text-white rounded shadow-lg mt-3 "
+								" z-50 py-2 border-4 border-slate-600  px-1 list-none text-left text-white rounded shadow-lg mt-1.5 "
 							}
 							style={{ minWidth: "95vw" }}
 						>
 							<Link
 								href="/"
 								className={
-									"text-sm py-2 px-2 font-normal block w-full whitespace-no-wrap bg-transparent " +
+									"text-sm py-2 px-2 font-bold  block w-full whitespace-no-wrap bg-transparent " +
 									(color === "white" ? " text-[#000000] bg-slate-400 rounded border border-[#000000]" : "text-white")
 								}
 								onClick={() =>  closeDropdownPopover()}
@@ -66,7 +66,7 @@ const Dropdown = ({ color }) => {
 								<Link
 									href="/manager"
                   className={
-                    "text-sm py-2 px-1.5 font-normal block w-full whitespace-no-wrap bg-transparent " +
+                    "text-sm py-2 px-1.5 font-bold block w-full whitespace-no-wrap bg-transparent " +
                     (color === "white" ? " text-[#000000] bg-slate-400 mt-1 rounded border border-[#000000]" : "text-white")
                   }
                   onClick={() =>  closeDropdownPopover()}
@@ -77,7 +77,7 @@ const Dropdown = ({ color }) => {
 							<Link
 								href="/trafic"
                 className={
-                  "text-sm py-2 px-2 font-normal block w-full whitespace-no-wrap bg-transparent " +
+                  "text-sm py-2 px-2 font-bold  block w-full whitespace-no-wrap bg-transparent " +
                   (color === "white" ? " text-[#000000] bg-slate-400 mt-1 rounded border border-[#000000]" : "text-white")
                 }
 								onClick={() =>  closeDropdownPopover()}
@@ -88,7 +88,7 @@ const Dropdown = ({ color }) => {
 							<Link
 								href="/login"
                 className={
-                  "text-sm py-2 px-1.5 font-normal block w-full whitespace-no-wrap bg-transparent " +
+                  "text-sm py-2 px-1.5 font-bold block w-full whitespace-no-wrap bg-transparent " +
                   (color === "white" ? " text-[#000000] bg-slate-300 mt-1 rounded border border-[#000000]" : "text-white")
                 }
 								onClick={() =>  closeDropdownPopover()}
