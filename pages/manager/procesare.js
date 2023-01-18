@@ -1,9 +1,14 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import SubmenuManager from "../../components/SubmenuManager";
 import React, { useState, useContext, useEffect } from "react";
 import { DataContext } from "../../store/GlobalState";
 
 export default function Manager() {
+	const [boolarmonici, setBoolarmonici] = useState(false);
+	const [boolintermodulatii, setBoolintermodulatii] = useState(false);
+
 	const [frecventeprocesate, setFreqProcesate] = useState([]); // frecvente procesate
 	const [farr, setFarr] = useState([]); // set initial Frecvente
 	var sortfarr = farr; // variabila ajutatoare
@@ -20,6 +25,18 @@ export default function Manager() {
 		});
 	}
 
+	const handleMouseOver = () => {
+		setBoolarmonici(true);
+	};
+	const handleMouseOut = () => {
+		setBoolarmonici(false);
+	};
+	const handleMouseOverI = () => {
+		setBoolintermodulatii(true);
+	};
+	const handleMouseOutI = () => {
+		setBoolintermodulatii(false);
+	};
 	//---------------------------------------------------------------------------------------------
 	const initialState = { armonica: 3, nrfreq: 5, val: 3 };
 	const [procesaredata, setProcesaredata] = useState(initialState);
@@ -350,132 +367,123 @@ export default function Manager() {
 									type: `Intermodulatie 2*${sorted[l - 1].frecventa} - ${sorted[t - 2].frecventa}`,
 									band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
 								});
-						
-									for (let b = 0; b < sorted.length; b++) {
-										armonici.push({
-											fi:
-												Number(sorted[l - 1].frecventa) +
-												Number(sorted[t - 2].frecventa) +
-												Number(sorted[b].frecventa) -
-												(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
-											fs:
-												Number(sorted[l - 1].frecventa) +
-												Number(sorted[t - 2].frecventa) +
-												Number(sorted[b].frecventa) +
-												(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
-											type: `Intermodulatie ${sorted[l - 1].frecventa} + ${
-												sorted[t - 2].frecventa
-											} + ${sorted[b].frecventa}`,
-											band: (sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 3,
-										});
-										armonici.push({
-											fi:
-												Number(sorted[l - 1].frecventa) +
-												Number(sorted[t - 2].frecventa) -
-												Number(sorted[b].frecventa) -
-												(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
-											fs:
-												Number(sorted[l - 1].frecventa) +
-												Number(sorted[t - 2].frecventa) -
-												Number(sorted[b].frecventa) +
-												(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
-											type: `Intermodulatie ${sorted[l - 1].frecventa} + ${
-												sorted[t - 2].frecventa
-											} - ${sorted[b].frecventa}`,
-											band: (sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 3,
-										});
-										armonici.push({
-											fi:
-												Number(sorted[t - 2].frecventa) -
-												Number(sorted[l - 1].frecventa) +
-												Number(sorted[b].frecventa) -
-												(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
-											fs:
-												Number(sorted[t - 2].frecventa) -
-												Number(sorted[l - 1].frecventa) +
-												Number(sorted[b].frecventa) +
-												(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
-											type: `Intermodulatie ${sorted[t - 2].frecventa} - ${
-												sorted[l - 1].frecventa
-											} + ${sorted[b].frecventa}`,
-											band: (sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 3,
-										});
-										armonici.push({
-											fi:
-												Number(sorted[l - 1].frecventa) +
-												Number(sorted[b].frecventa) -
-												Number(sorted[t - 2].frecventa) -
-												(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
-											fs:
-												Number(sorted[l - 1].frecventa) +
-												Number(sorted[b].frecventa) -
-												Number(sorted[t - 2].frecventa) +
-												(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
-											type: `Intermodulatie ${sorted[l - 1].frecventa} + ${sorted[b].frecventa} - ${
-												sorted[t - 2].frecventa
-											}`,
-											band: (sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 3,
-										});
-									}
+
+								for (let b = 0; b < sorted.length; b++) {
 									armonici.push({
 										fi:
 											Number(sorted[l - 1].frecventa) +
-											Number(sorted[t - 2].frecventa) * 2 -
-											(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+											Number(sorted[t - 2].frecventa) +
+											Number(sorted[b].frecventa) -
+											(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
 										fs:
 											Number(sorted[l - 1].frecventa) +
-											Number(sorted[t - 2].frecventa) * 2 +
-											(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+											Number(sorted[t - 2].frecventa) +
+											Number(sorted[b].frecventa) +
+											(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
 										type: `Intermodulatie ${sorted[l - 1].frecventa} + ${
 											sorted[t - 2].frecventa
-										}*2`,
-										band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
+										} + ${sorted[b].frecventa}`,
+										band: (sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 3,
 									});
 									armonici.push({
 										fi:
-											Number(sorted[l - 1].frecventa) -
-											Number(sorted[t - 2].frecventa) * 2 -
-											(sorted[l - 1].band + sorted[t - 2].band) / 4000,
-										fs:
-											Number(sorted[l - 1].frecventa) -
-											Number(sorted[t - 2].frecventa) * 2 +
-											(sorted[l - 1].band + sorted[t - 2].band) / 4000,
-										type: `Intermodulatie ${sorted[l - 1].frecventa} - ${
-											sorted[t - 2].frecventa
-										}*2`,
-										band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
-									});
-									armonici.push({
-										fi:
-											Number(sorted[l - 1].frecventa) * 2 +
+											Number(sorted[l - 1].frecventa) +
 											Number(sorted[t - 2].frecventa) -
-											(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+											Number(sorted[b].frecventa) -
+											(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
 										fs:
-											Number(sorted[l - 1].frecventa) * 2 +
+											Number(sorted[l - 1].frecventa) +
+											Number(sorted[t - 2].frecventa) -
+											Number(sorted[b].frecventa) +
+											(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
+										type: `Intermodulatie ${sorted[l - 1].frecventa} + ${
+											sorted[t - 2].frecventa
+										} - ${sorted[b].frecventa}`,
+										band: (sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 3,
+									});
+									armonici.push({
+										fi:
+											Number(sorted[t - 2].frecventa) -
+											Number(sorted[l - 1].frecventa) +
+											Number(sorted[b].frecventa) -
+											(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
+										fs:
+											Number(sorted[t - 2].frecventa) -
+											Number(sorted[l - 1].frecventa) +
+											Number(sorted[b].frecventa) +
+											(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
+										type: `Intermodulatie ${sorted[t - 2].frecventa} - ${
+											sorted[l - 1].frecventa
+										} + ${sorted[b].frecventa}`,
+										band: (sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 3,
+									});
+									armonici.push({
+										fi:
+											Number(sorted[l - 1].frecventa) +
+											Number(sorted[b].frecventa) -
+											Number(sorted[t - 2].frecventa) -
+											(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
+										fs:
+											Number(sorted[l - 1].frecventa) +
+											Number(sorted[b].frecventa) -
 											Number(sorted[t - 2].frecventa) +
-											(sorted[l - 1].band + sorted[t - 2].band) / 4000,
-										type: `Intermodulatie 2*${sorted[l - 1].frecventa} + ${
+											(sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 6000,
+										type: `Intermodulatie ${sorted[l - 1].frecventa} + ${sorted[b].frecventa} - ${
 											sorted[t - 2].frecventa
 										}`,
-										band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
-										band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
+										band: (sorted[l - 1].band + sorted[t - 2].band + sorted[b].band) / 3,
 									});
-									armonici.push({
-										fi:
-											Number(sorted[l - 1].frecventa) * 2 -
-											Number(sorted[t - 2].frecventa) -
-											(sorted[l - 1].band + sorted[t - 2].band) / 4000,
-										fs:
-											Number(sorted[l - 1].frecventa) * 2 -
-											Number(sorted[t - 2].frecventa) +
-											(sorted[l - 1].band + sorted[t - 2].band) / 4000,
-										type: `Intermodulatie 2*${sorted[l - 1].frecventa} - ${
-											sorted[t - 2].frecventa
-										}`,
-										band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
-										band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
-									});
-								
+								}
+								armonici.push({
+									fi:
+										Number(sorted[l - 1].frecventa) +
+										Number(sorted[t - 2].frecventa) * 2 -
+										(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+									fs:
+										Number(sorted[l - 1].frecventa) +
+										Number(sorted[t - 2].frecventa) * 2 +
+										(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+									type: `Intermodulatie ${sorted[l - 1].frecventa} + ${sorted[t - 2].frecventa}*2`,
+									band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
+								});
+								armonici.push({
+									fi:
+										Number(sorted[l - 1].frecventa) -
+										Number(sorted[t - 2].frecventa) * 2 -
+										(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+									fs:
+										Number(sorted[l - 1].frecventa) -
+										Number(sorted[t - 2].frecventa) * 2 +
+										(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+									type: `Intermodulatie ${sorted[l - 1].frecventa} - ${sorted[t - 2].frecventa}*2`,
+									band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
+								});
+								armonici.push({
+									fi:
+										Number(sorted[l - 1].frecventa) * 2 +
+										Number(sorted[t - 2].frecventa) -
+										(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+									fs:
+										Number(sorted[l - 1].frecventa) * 2 +
+										Number(sorted[t - 2].frecventa) +
+										(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+									type: `Intermodulatie 2*${sorted[l - 1].frecventa} + ${sorted[t - 2].frecventa}`,
+									band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
+									band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
+								});
+								armonici.push({
+									fi:
+										Number(sorted[l - 1].frecventa) * 2 -
+										Number(sorted[t - 2].frecventa) -
+										(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+									fs:
+										Number(sorted[l - 1].frecventa) * 2 -
+										Number(sorted[t - 2].frecventa) +
+										(sorted[l - 1].band + sorted[t - 2].band) / 4000,
+									type: `Intermodulatie 2*${sorted[l - 1].frecventa} - ${sorted[t - 2].frecventa}`,
+									band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
+									band: (sorted[l - 1].band + sorted[t - 2].band) / 2,
+								});
 							}
 						}
 					}
@@ -515,7 +523,7 @@ export default function Manager() {
 		}
 		setFarr(swap);
 		setFreqProcesate(sorted); // setare lista finala frecvente procesae
-		console.log(armonici);
+		// console.log(armonici);
 
 		dispatch({
 			type: "ARMONICI",
@@ -578,8 +586,8 @@ export default function Manager() {
 								<thead className="sticky  top-0 z-5 bg-slate-400 border-b border-gray-800">
 									<tr>
 										<th className="border-2  border-gray-700">Nr.</th>
-										<th className="px-1 border-2 border-gray-700">Freq (Mhz)</th>
-										<th className="px-1 border-2 border-gray-700 ">Band (Khz)</th>
+										<th className="px-1 border-2 border-gray-700">Freq (MHz)</th>
+										<th className="px-1 border-2 border-gray-700 ">Band (kHz)</th>
 										{/* <th className=" border-2 border-gray-700 ">
 											<svg
 												className="mx-auto "
@@ -630,13 +638,26 @@ export default function Manager() {
 								<div className="mb-2  md:w-1/2 w-full ">
 									<label htmlFor="email" className="block mb-1 font-bold text-md text-gray-900 ">
 										<span
+											onMouseOver={handleMouseOver}
+											onMouseOut={handleMouseOut}
 											data-tooltip-target="tooltip-default"
-											className="bg-gray-400 px-1.5   py-0 text-md text-red-700 border-2 border-red-600  font-bold rounded-full"
+											className="bg-gray-400 px-1.5 hover:scale-110  py-0 text-md text-red-700 border-2 border-red-600  font-bold rounded-full"
 										>
 											?
 										</span>{" "}
 										Nr. Armonici ( 1-7 )
 									</label>
+									{boolarmonici && (
+										<div className=" p-1 pt-0 absolute bg-gray-400 border-2  font-medium border-gray-700 mr-16 z-100 rounded-md">
+											{" "}
+											Armonica unei frecvente este egală cu un multiplu întreg al frecvenţei
+											fundamentale <br />
+											Ex: Pentru frecventa de <span className="font-bold">20MHz</span> avem
+											urmatoarle armonici:{" "}
+											<span className="font-bold">40MHz(I) - 60MHz(II) - 80(III) - 100MHz(IV)</span>
+											<img alt="armonici" src="\images\armonici.png"></img>
+										</div>
+									)}
 									<input
 										min="0"
 										max="7"
@@ -679,10 +700,28 @@ export default function Manager() {
 									>
 										{" "}
 										<div className="block w-full">
-											<span className="bg-gray-400 px-1.5 mr-1 -ml-2 py-0 text-red-700 border-2 border-red-600  font-bold rounded-full">
+											<span
+												onMouseOver={handleMouseOverI}
+												onMouseOut={handleMouseOutI}
+												className="bg-gray-400 px-1.5 mr-1 -ml-2 py-0 text-red-700 border-2 border-red-600  font-bold rounded-full"
+											>
 												?
 											</span>
 											Produse Intermodulatie:
+											{boolintermodulatii && (
+												<div className="p-1 absolute pt-0 bg-gray-400 border-2  font-medium border-gray-700 mr-16 z-100 rounded-md">
+													{" "}
+													Intermodulația este modularea în amplitudine a semnalelor care conțin două
+													sau mai multe frecvențe diferite, cauzată de neliniarități sau de variația
+													de timp dintr-un sistem. Intermodulația dintre componentele de frecvență
+													va forma componente suplimentare, nu doar armonice (multipli întregi) ale
+												  ci și la frecvențele suma șidiferența ale frecvențelor originale și la sumele și diferențele
+													multiplilor acestora. <br/>
+													Ex:<span className="font-bold"> F1 + F2 , F1-F2 , 2F1 + F2, F1+F2+F3</span>
+												
+													<img className="w-full"alt="armonici" src="\images\intermodulatii.png"></img>
+												</div>
+											)}
 										</div>
 									</label>
 									<input
@@ -738,11 +777,11 @@ export default function Manager() {
 							</button> */}
 						</div>
 						<table className="ml-2 radius-xl table w-full  border-2  border-gray-700 font-medium bg-slate-400">
-							<thead className="sticky  top-0 z-5 bg-slate-400 border-b border-gray-800">
+							<thead className="  top-0 z-5 bg-slate-400 border-b border-gray-800">
 								<tr>
 									<th className="border-2  border-gray-700">Nr.</th>
-									<th className="px-1 border-2 border-gray-700">Freq (Mhz)</th>
-									<th className="px-1 border-2 border-gray-700 ">Band (Khz)</th>
+									<th className="px-1 border-2 border-gray-700">Freq (MHz)</th>
+									<th className="px-1 border-2 border-gray-700 ">Band (kHz)</th>
 									<th className=" border-2 border-gray-700 ">
 										<svg
 											className="mx-auto "

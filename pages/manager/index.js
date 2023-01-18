@@ -5,6 +5,24 @@ import { DataContext } from "../../store/GlobalState";
 import * as XLSX from "xlsx";
 
 export default function Manager() {
+	const data = [{ Frecventa_Mhz: [{ width: 200 }], Banda_kHz: [{ width: 200 }] }];
+	const downloadExcel = (data) => {
+		const worksheet = XLSX.utils.json_to_sheet(data);
+		const workbook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+		// let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+		XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+		XLSX.writeFile(workbook, "Set Frecvente .xlsx");
+	};
+
+	const [isHovering, setIsHovering] = useState(false);
+	const handleMouseOver = () => {
+		setIsHovering(true);
+	};
+
+	const handleMouseOut = () => {
+		setIsHovering(false);
+	};
 	const initialState = {
 		frecventa: "",
 		banda: "",
@@ -36,12 +54,11 @@ export default function Manager() {
 							dispatch({
 								type: "NOTIFY",
 								payload: {
-									error: "Frecventa > 1 Mhz si < 10000 Mhz",
+									error: "Frecventa > 1 MHz si < 10000 MHz",
 								},
 							})
 						);
 					}
-					
 				});
 				resolve(data);
 			};
@@ -53,12 +70,39 @@ export default function Manager() {
 
 		promise.then((d) => {
 			let arr = farr;
-			d.map((e) => arr.push({ frecventa: e[Object.keys(e)[0]], band: e[Object.keys(e)[1]] })
 
-			)
-			setFarr([...farr ]);
+			d.map((e) => arr.push({ frecventa: e[Object.keys(e)[0]], band: e[Object.keys(e)[1]] }));
+
+			var help = farr.filter(
+				(value, index, self) =>
+					index ===
+					self.findIndex((t) => t.frecventa === value.frecventa )
+			);
+      let distinct = [];
+			let duplicates = [];
+			farr.forEach((item, index, object) => {
+				if (
+					distinct.find(
+						(current) =>
+							current.frecventa === item.frecventa 
+					)
+				) {
+					duplicates.push(item);
+				} else {
+					distinct.push(item);
+				}
+			});
+
+			duplicates.length>0?(dispatch({
+				type: "NOTIFY",
+				payload: {
+					error: `${'Duplicate gasite si sterse la frecventale:'+duplicates.map(e => e.frecventa + "MHz ")}`
+				},
+			})):(null)
+
+
+			setFarr([...distinct]);
 		});
-		
 	};
 
 	const { state, dispatch } = useContext(DataContext);
@@ -72,7 +116,6 @@ export default function Manager() {
 	const handleChangeInput = (e) => {
 		const { name, value } = e.target;
 		setFdata({ ...fdata, [name]: value });
-		console.log(farr);
 	};
 	const handleSubmit = async (x) => {
 		x.preventDefault();
@@ -81,7 +124,7 @@ export default function Manager() {
 			dispatch({
 				type: "NOTIFY",
 				payload: {
-					error: "Dublura la frecventa de " + frecventa + " Mhz",
+					error: "Dublura la frecventa de " + frecventa + " MHz",
 				},
 			});
 
@@ -91,7 +134,7 @@ export default function Manager() {
 			dispatch({
 				type: "NOTIFY",
 				payload: {
-					error: "Frecventa > 1 Mhz si < 10000 Mhz",
+					error: "Frecventa > 1 MHz si < 10000 MHz",
 				},
 			});
 			setFdata(initialState);
@@ -101,7 +144,7 @@ export default function Manager() {
 			dispatch({
 				type: "NOTIFY",
 				payload: {
-					error: "Banda > 2 KHz si < 5000 KHz",
+					error: "Banda > 2 kHz si < 5000 kHz",
 				},
 			});
 			setFdata(initialState);
@@ -110,7 +153,7 @@ export default function Manager() {
 		dispatch({
 			type: "NOTIFY",
 			payload: {
-				success: " Frecventa " + frecventa + " de Mhz  ---> " + "Banda de " + banda + " Khz",
+				success: " Frecventa " + frecventa + " de MHz  ---> " + "Banda de " + banda + " Khz",
 			},
 		});
 
@@ -182,7 +225,7 @@ export default function Manager() {
 									name="banda"
 									onChange={handleChangeInput}
 									id="password"
-									placeholder="2 - 5000 KHz"
+									placeholder="2 - 5000 kHz"
 									className=" border w-full ml-3 text-slate-200 border-blue-900  text-sm rounded-lg bg-gray-700  p-2.5 "
 									required
 								></input>{" "}
@@ -236,12 +279,15 @@ export default function Manager() {
 							>
 								Adauga Frecventa
 							</button>
-							<div className="flex"><label for="first_name" class="block mb-2 text-sm font-bold text-red-600"><span class='bg-green-100 rounded-xl px-2 font-bold text-md mr-1'>!!</span>EXCEL: Col 1 - Frecventa -- Col 2 - Banda</label>
-</div>
+							<div className="flex">
+								<label for="first_name" class="block mb-2 text-sm font-bold text-red-600">
+									<span class="bg-green-100 rounded-xl px-2 font-bold text-md mr-1">!!</span>EXCEL:
+									Col 1 - Frecventa ^ Col 2 - Banda
+								</label>
+							</div>
 							<div className="grid sm:grid-cols-2 ">
 								<div>
-								
-									<label className="text-white  flex justify-center shadow-xl -mt-2  py-2.5 mb-2 text-sm font-bold md:whitespace-nowrap  ml-1 -mr-1 bg-slate-900 border-2  hover:bg-slate-800 hover:border-green-500 border-green-600 rounded-lg">
+									<label className="text-white  flex justify-center shadow-xl -mt-2  py-2.5 mb-3 md:mb-2 text-sm font-bold md:whitespace-nowrap  ml-1 -mr-1 bg-slate-900 border-2  hover:bg-slate-800 hover:border-green-500 border-green-600 rounded-lg">
 										{" "}
 										<input
 											onChange={(e) => {
@@ -301,16 +347,60 @@ export default function Manager() {
 										</svg>
 									</label>
 								</div>
-
 								<button
-									type="submit"
-									onClick={handleSubmit}
 									className="text-white flex justify-center shadow-xl  -mt-2 py-2.5 mb-2 text-sm font-bold md:whitespace-nowrap -mr-1.5 ml-1.5 bg-slate-900 hover:bg-slate-800 border-2 hover:border-green-500 border-green-600 rounded-lg"
+									onClick={() => downloadExcel(data)}
 								>
-									<span>Import set din fisier .txt</span>
+									<span className="pr-6">Template excell</span>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 48 48"
+										width="26px"
+										height="26px"
+									>
+										<rect width="16" height="9" x="28" y="15" fill="#21a366" />
+										<path
+											fill="#185c37"
+											d="M44,24H12v16c0,1.105,0.895,2,2,2h28c1.105,0,2-0.895,2-2V24z"
+										/>
+										<rect width="16" height="9" x="28" y="24" fill="#107c42" />
+										<rect width="16" height="9" x="12" y="15" fill="#3fa071" />
+										<path fill="#33c481" d="M42,6H28v9h16V8C44,6.895,43.105,6,42,6z" />
+										<path fill="#21a366" d="M14,6h14v9H12V8C12,6.895,12.895,6,14,6z" />
+										<path
+											d="M22.319,13H12v24h10.319C24.352,37,26,35.352,26,33.319V16.681C26,14.648,24.352,13,22.319,13z"
+											opacity=".05"
+										/>
+										<path
+											d="M22.213,36H12V13.333h10.213c1.724,0,3.121,1.397,3.121,3.121v16.425	C25.333,34.603,23.936,36,22.213,36z"
+											opacity=".07"
+										/>
+										<path
+											d="M22.106,35H12V13.667h10.106c1.414,0,2.56,1.146,2.56,2.56V32.44C24.667,33.854,23.52,35,22.106,35z"
+											opacity=".09"
+										/>
+										<linearGradient
+											id="flEJnwg7q~uKUdkX0KCyBa"
+											x1="4.725"
+											x2="23.055"
+											y1="14.725"
+											y2="33.055"
+											gradientUnits="userSpaceOnUse"
+										>
+											<stop offset="0" stopColor="#18884f" />
+											<stop offset="1" stopColor="#0b6731" />
+										</linearGradient>
+										<path
+											fill="url(#flEJnwg7q~uKUdkX0KCyBa)"
+											d="M22,34H6c-1.105,0-2-0.895-2-2V16c0-1.105,0.895-2,2-2h16c1.105,0,2,0.895,2,2v16	C24,33.105,23.105,34,22,34z"
+										/>
+										<path
+											fill="#fff"
+											d="M9.807,19h2.386l1.936,3.754L16.175,19h2.229l-3.071,5l3.141,5h-2.351l-2.11-3.93L11.912,29H9.526	l3.193-5.018L9.807,19z"
+										/>
+									</svg>
 								</button>
 							</div>
-
 							<button
 								onClick={SalveazaArr}
 								className="text-white shadow-xl text-center w-1/2 ml-1  md:whitespace-nowrap font-medium rounded-lg text-sm px-5 py-2.5 border-2 hover:bg-[#435ed4] border-[#1630a3] bg-[#344cb3]"
@@ -328,16 +418,35 @@ export default function Manager() {
 					{/* --------->  start Table Freq  */}
 					<div>
 						{" "}
-						<h2 className="pb-3 ml-3  mt-4 border-t-4 border-gray-700 text-2xl font-bold tracking-wide">
-							Tabel frecvente alocate
+						<h2 className=" ml-3  mt-4 border-t-4 border-gray-700 text-xl md:text-2xl font-bold tracking-wide">
+							Tabel frecvente alocate ~ ( {farr.length} )
 						</h2>
+						<div
+							className="hidden md:flex "
+							onMouseOver={handleMouseOver}
+							onMouseOut={handleMouseOut}
+						>
+							{" "}
+							<span className="bg-gray-400 px-1.5 mr-1 -ml-2  text-red-700 border-2 border-red-600  font-bold rounded-full">
+								?
+							</span>{" "}
+							<span className=" -pt-3"> Range Frecvente</span>
+						</div>
+						{isHovering && (
+							<div className=" font-bold text-slate-800 border-4 rounded-md ml-4 border-slate-700 ">
+								<h2 className="">2 - 30 MHz - HF</h2>
+								<h2>30 - 108/300 MHz - VHF</h2>
+								<h2>300 - 3000 MHz(3GHz) - UHF</h2>
+								<h2>3000(3GHz) - 30000 MHz(30GHz) - SHF</h2>
+							</div>
+						)}
 						<div className="rounded-sm ml-2  static  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-600 scrollbar-track-gray-300 overflow-y-auto h-[60vh] -mr-2 ">
 							<table className=" table w-full border-2 border-gray-700 font-medium bg-slate-400">
 								<thead className="sticky  top-0 z-5 bg-slate-400 border-b border-gray-800">
 									<tr>
 										<th className="border-2  border-gray-700">Nr.</th>
-										<th className="px-1 border-2 border-gray-700">Freq (Mhz)</th>
-										<th className="px-1 border-2 border-gray-700 ">Band (Khz)</th>
+										<th className="px-1 border-2 border-gray-700">Freq (MHz)</th>
+										<th className="px-1 border-2 border-gray-700 ">Band (kHz)</th>
 										<th className=" border-2 border-gray-700 ">
 											<svg
 												className="mx-auto "
@@ -352,13 +461,20 @@ export default function Manager() {
 									</tr>
 								</thead>
 								<tbody className="text-center text-[#000000]">
-									{console.log(farr)}
 									{farr
 										? farr.map((x, index) => {
 												return (
-													<tr key={index+1}>
-														<th className="border-r-2  border-gray-700">{index+1 }</th>
-														<td className="border-r-2  border-gray-700">{x.frecventa}</td>
+													<tr key={index + 1}>
+														<th className="border-r-2  border-gray-700">{index + 1}</th>
+														<td className="border-r-2  border-gray-700">
+															{+x.frecventa >= 2 && +x.frecventa <= 30
+																? +x.frecventa + " - VHF"
+																: x.frecventa >= 30 && x.frecventa <= 300
+																? x.frecventa + " - HF"
+																: x.frecventa >= 300 && x.frecventa <= 3000
+																? x.frecventa + " - UHF"
+																: x.frecventa + "- SHF"}
+														</td>
 														<td className="border-r-2  border-gray-700">{x.band}</td>
 														<td className="text-[#e02222] ">
 															<button

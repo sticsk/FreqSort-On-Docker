@@ -71,9 +71,9 @@ const Armonici = () => {
 				<thead className="sticky  top-0 z-5 bg-slate-400 border-b border-gray-800">
 					<tr>
 						<th className="border-2  border-gray-700">Nr.</th>
-						<th className="px-1 border-2 border-gray-700">Canal (Mhz)</th>
-						<th className="px-1 border-2 border-gray-700">Frecventa (Mhz)</th>
-						<th className="px-1 border-2 border-gray-700 ">Band (Khz)</th>
+						<th className="px-1 border-2 border-gray-700">Canal (MHz)</th>
+						<th className="px-1 border-2 border-gray-700">Frecventa (MHz)</th>
+						<th className="px-1 border-2 border-gray-700 ">Band (kHz)</th>
 						{/* <th className=" border-2 border-gray-700 ">
 											<svg
 												className="mx-auto "
