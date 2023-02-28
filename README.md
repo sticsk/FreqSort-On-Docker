@@ -32,3 +32,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Run on Docker
+
+Build the container with the dependencies by using : 
+
+```bash
+docker build -t freqsort .
+```
+
+Then run the container by using : 
+
+```bash
+docker run -p 3000:3000 freqsort
+```
+
+In order to see the web application open any browser and access `http://localhost:3000` or `http://host-ip:3000`
