@@ -21,6 +21,7 @@ or
 Like I said in the first paragraph, make sure to know your CPU architecture, beacuse building the image requires `--platform` flag.
 
 **For amd64**
+
 *To build :*
 ```bash
 docker build --platform=linux/amd64 -t freqsort:amd64 .
@@ -31,6 +32,7 @@ docker run --name freqsort -p 3000:3000 freqsort
 ```
 
 **For arm64**
+
 *To build :*
 ```bash
 docker build --platform=linux/arm64 -t freqsort:arm64 .
