@@ -26,14 +26,12 @@ export default function Manager() {
 	const initialState = {
 		frecventa: "",
 		banda: "",
-		putere: "",
-		distanta: "",
 	};
 
-	const [items, setItems] = useState([]);
+	// const [items, setItems] = useState([]);
 	const [fdata, setFdata] = useState(initialState);
-	const { frecventa, banda, putere, distanta } = fdata;
-
+	const { frecventa, banda,  } = fdata;
+	
 	const readExcel = (file) => {
 		const promise = new Promise((resolve, reject) => {
 			const fileReader = new FileReader();
@@ -71,35 +69,32 @@ export default function Manager() {
 		promise.then((d) => {
 			let arr = farr;
 
-			d.map((e) => arr.push({ frecventa: e[Object.keys(e)[0]], band: e[Object.keys(e)[1]] }));
+			d.map((e) => arr.push({ frecventa: e[Object.keys(e)[0]].toFixed(3), band: e[Object.keys(e)[1]] }));
 
 			var help = farr.filter(
-				(value, index, self) =>
-					index ===
-					self.findIndex((t) => t.frecventa === value.frecventa )
+				(value, index, self) => index === self.findIndex((t) => t.frecventa === value.frecventa)
 			);
-      let distinct = [];
+			let distinct = [];
 			let duplicates = [];
 			farr.forEach((item, index, object) => {
-				if (
-					distinct.find(
-						(current) =>
-							current.frecventa === item.frecventa 
-					)
-				) {
+				if (distinct.find((current) => current.frecventa === item.frecventa)) {
 					duplicates.push(item);
 				} else {
 					distinct.push(item);
 				}
 			});
 
-			duplicates.length>0?(dispatch({
-				type: "NOTIFY",
-				payload: {
-					error: `${'Duplicate gasite si sterse la frecventale:'+duplicates.map(e => e.frecventa + "MHz ")}`
-				},
-			})):(null)
-
+			duplicates.length > 0
+				? dispatch({
+						type: "NOTIFY",
+						payload: {
+							error: `${
+								"Duplicate gasite si sterse la frecventale:" +
+								duplicates.map((e) => e.frecventa + "MHz ")
+							}`,
+						},
+				  })
+				: null;
 
 			setFarr([...distinct]);
 		});
@@ -191,7 +186,7 @@ export default function Manager() {
 			{/* ---------- > End Meniu + Submeniu */}
 
 			<div className="">
-				<div className="w-11/12 md:w-3/5 xl:w-2/5 mx-auto text-center pr-3 border-slate-400 md:col-span-3 col-span-6  ">
+				<div className="w-11/12 md:w-4/5 xl:w-3/5 mx-auto text-center pr-3 border-slate-400 md:col-span-3 col-span-6  ">
 					<form>
 						<div className="flex mr-1.5 -ml-0.5 ">
 							<div className="mb-2 w-1/2 ">
@@ -401,15 +396,15 @@ export default function Manager() {
 									</svg>
 								</button>
 							</div>
-							<button
+							{/* <button
 								onClick={SalveazaArr}
 								className="text-white shadow-xl text-center w-1/2 ml-1  md:whitespace-nowrap font-medium rounded-lg text-sm px-5 py-2.5 border-2 hover:bg-[#435ed4] border-[#1630a3] bg-[#344cb3]"
 							>
 								Salveaza Set
-							</button>
+							</button> */}
 							<button
 								onClick={DeleteFarr}
-								className="text-white text-center w-1/2 ml-1 pl-4 -mr-2 md:whitespace-nowrap font-medium rounded-lg text-sm px-5 py-2.5 border-2 hover:bg-[#ec2415] border-[#910000]  bg-[#da0000]"
+								className="text-white w-full text-center  ml-1 pl-4 -mr-2 md:whitespace-nowrap font-medium rounded-lg text-sm px-5 py-2.5 border-2 hover:bg-[#ec2415] border-[#910000]  bg-[#da0000]"
 							>
 								Sterge Set
 							</button>
@@ -458,6 +453,23 @@ export default function Manager() {
 												<path d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"></path>
 											</svg>
 										</th>
+										<th className=" border-2  border-gray-700 ">
+											<svg
+											 className="mx-auto"
+												width="20"
+												height="25"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													clip-rule="evenodd"
+													d="m3.99 16.854-1.314 3.504a.75.75 0 0 0 .966.965l3.503-1.314a3 3 0 0 0 1.068-.687L18.36 9.175s-.354-1.061-1.414-2.122c-1.06-1.06-2.122-1.414-2.122-1.414L4.677 15.786a3 3 0 0 0-.687 1.068zm12.249-12.63 1.383-1.383c.248-.248.579-.406.925-.348.487.08 1.232.322 1.934 1.025.703.703.945 1.447 1.025 1.934.058.346-.1.677-.348.925L19.774 7.76s-.353-1.06-1.414-2.12c-1.06-1.062-2.121-1.415-2.121-1.415z"
+													fill="#000000"
+												/>
+											</svg>
+										</th>
 									</tr>
 								</thead>
 								<tbody className="text-center text-[#000000]">
@@ -468,9 +480,9 @@ export default function Manager() {
 														<th className="border-r-2  border-gray-700">{index + 1}</th>
 														<td className="border-r-2  border-gray-700">
 															{+x.frecventa >= 2 && +x.frecventa <= 30
-																? +x.frecventa + " - VHF"
+																? +x.frecventa + " - HF"
 																: x.frecventa >= 30 && x.frecventa <= 300
-																? x.frecventa + " - HF"
+																? x.frecventa + " - VHF"
 																: x.frecventa >= 300 && x.frecventa <= 3000
 																? x.frecventa + " - UHF"
 																: x.frecventa + "- SHF"}
@@ -489,6 +501,25 @@ export default function Manager() {
 															>
 																{" "}
 																Sterge
+															</button>
+														</td>
+														<td className="text-blue-700 ">
+															<button
+																className="hover:scale-110"
+																onClick={() =>
+																{	setFdata({
+																	frecventa: x.frecventa,
+																	banda: x.band,
+																})
+																	setFarr(
+																		farr.filter(function (farr) {
+																			return farr.frecventa != x.frecventa;
+																		})
+																	)}
+																}
+															>
+																{" "}
+																Editeaza
 															</button>
 														</td>
 													</tr>
