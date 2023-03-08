@@ -17,7 +17,12 @@ const Armonici = () => {
 	function sort() {
 		var sortfarr = setsarr.sort((a, b) => a.fi - b.fi); // sortarre frecvente crescator
 		var sortfarr2 = sortfarr.filter((a) => a.fi > 1);
-		setSetarr(sortfarr2);
+
+		var sortfarr3 = sortfarr2.filter(
+			(value, index, self) => index === self.findIndex((t) => t.fi === value.fi)
+		);
+			
+		setSetarr(sortfarr3);
 		dispatch({
 			type: "NOTIFY",
 			payload: {
@@ -58,14 +63,14 @@ const Armonici = () => {
 					);
 				})} */}
 			<div className="mx-auto w-0 mt-2 -mb-2">
-			<button
-									onClick={() => {
-										sort();
-									}}
-									className="bg-blue-700 p-1 px-2 rounded-xl mr-2 md:mr-5 text-green-500"
-								>
-									Sortare
-								</button>
+				<button
+					onClick={() => {
+						sort();
+					}}
+					className="bg-blue-700 p-1 px-2 rounded-xl mr-2 md:mr-5 text-green-500"
+				>
+					Sortare
+				</button>
 			</div>
 			<table className=" radius-xl table mt-4 w-4/5 mx-auto  border-2  border-gray-700 font-medium bg-slate-400">
 				<thead className="sticky  top-0 z-5 bg-slate-400 border-b border-gray-800">
@@ -75,8 +80,7 @@ const Armonici = () => {
 						<th className="px-1 border-2 border-gray-700">Frecventa (MHz)</th>
 						<th className="px-1 border-2 border-gray-700 ">Band (kHz)</th>
 						{/* <th className=" border-2 border-gray-700 ">
-											<svg
-												className="mx-auto "
+											<svg                    
 												xmlns="http://www.w3.org/2000/svg"
 												width="20"
 												height="25"
@@ -90,32 +94,36 @@ const Armonici = () => {
 				<tbody className="text-center text-[#000000]">
 					{setsarr
 						? setsarr.map((x, index) => {
-								return (
-									<tr key={index}>
-										<th className="border-r-2  border-gray-700">{index + 1}</th>
-										<td className="border-r-2  border-gray-700">
-											{x.fi} - {x.fs}
-										</td>
-										<td className="border-r-2  border-gray-700">{x.type}</td>
-										<td className="border-r-2  border-gray-700">{x.band}</td>
+								while (index < 1000) {
+									return (
+										<tr key={index}>
+											<th className="border-r-2  border-gray-700">{index + 1}</th>
+											<td className="border-r-2  border-gray-700">
+												{/* {Number.parseFloat(x.fi.toFixed(10))} - {Number.parseFloat(x.fs.toFixed(10))}
+												 */}
+												 {x.fi.toFixed(4)}-{x.fs.toFixed(4)}
+											</td>
+											<td className="border-r-2  border-gray-700">{x.type}</td>
+											<td className="border-r-2  border-gray-700">{x.band}</td>
 
-										{/* <td className="text-[#e02222] "> */}
-										{/* <button
-																className="hover:scale-110"
-																onClick={() =>
-																	setFarr(
-																		farr.filter(function (farr) {
-																			return farr.frecventa != x.frecventa;
-																		})
-																	)
-																}
-															>
-																{" "}
-																Sterge
-															</button> */}
-										{/* </td> */}
-									</tr>
-								);
+											{/* <td className="text-[#e02222] "> */}
+											{/* <button
+															className="hover:scale-110"
+															onClick={() =>
+																setFarr(
+																	farr.filter(function (farr) {
+																		return farr.frecventa != x.frecventa;
+																	})
+																)
+															}
+														>
+															{" "}
+															Sterge
+														</button> */}
+											{/* </td> */}
+										</tr>
+									);
+								}
 						  })
 						: null}
 				</tbody>

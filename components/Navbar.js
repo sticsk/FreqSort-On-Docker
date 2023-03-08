@@ -157,7 +157,7 @@ grow"
 									<Link
 										href="/trafic"
 										className={
-											(path == "/trafic" ? "bg-green-700 " : "bg-gray-700 ") +
+											(path.includes("trafic") ? "bg-green-700 " : "bg-gray-700 ") +
 											"flex w-36 text-md border-2 hover:scale-105 border-sky-900 text-white pl-3 py-2 rounded-md  font-medium"
 										}
 									>

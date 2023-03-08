@@ -1,45 +1,45 @@
 import React, { useRef, useEffect } from "react";
 
 const Canvas = () => {
-	const arr = [];
-	var sorted = [5, 10, 45, 58 ,52];
-	var k = 1;
-	if (sorted.length > 1) {
-		var sum = 0;
+	var sorted = [
+		2.1, 2.2, 2.55, 3.6, 4.55,
+		// 5.8, 7.88, 9, 12
+	];
 
-		for (let t = 0; t < sorted.length; t++) {
-			var sum = 0;
-			for (let l = 0; l < sorted.length; l++) {
-				var sumt = 0;
-				if (k == 1) {
-					for (let i = 0; i < sorted.length; i++) {}
-
-					// if (sorted[l] == sorted[t]) {
-					// 	sum = sum
-					// } else {
-					// 	sum += sorted[l];
-					// }
-				}
-			}
-			console.log(sum);
-		}
-	}
 	const powerset = (arr) => arr.reduce((a, v) => a.concat(a.map((r) => [v].concat(r))), [[]]);
-	var interm = powerset(sorted).filter((x) => x.length > 1);
 
-	interm = [...new Set(interm)];
+	
+	var canaleintermodulatii = powerset(sorted).filter((x) => x.length > 1);
 
-	for (var i = 0; i < interm.length; i++) {
-		var sum = 0;
-		for (var j = 0; j < interm[i].length; j++) {
-			sum += interm[i][j];
+	canaleintermodulatii = [...new Set(canaleintermodulatii)];
+	function generateCombinations(array, index, currentResult, results) {
+		if (index === array.length) {
+			results.push(currentResult);
+			return;
 		}
-		arr.push(sum);
+		generateCombinations(array, index + 1, +currentResult + +array[index], results);
+		generateCombinations(array, index + 1, +currentResult - +array[index], results);
+		generateCombinations(array, index + 1, +currentResult + +array[index] * 2, results);
+		generateCombinations(array, index + 1, +currentResult - +array[index] * 2, results);
 	}
 
-	var test = [...new Set(arr)];
-	console.log(interm);
-	return <div>test</div>;
+	const results = [];
+	console.log("Interm length", canaleintermodulatii.length);
+	for (var i = 0; i < canaleintermodulatii.length; i++) {
+		generateCombinations(canaleintermodulatii[i], 0, "", results);
+	}
+
+	let uniqlist = [...new Set(results.filter((e) => e > 0))];
+
+	let uniqlist0 = uniqlist.map((x) => Number.parseFloat(x.toFixed(4)));
+
+	console.log(uniqlist0);
+
+	return (
+		<div className="flex">
+			
+		</div>
+	);
 };
 
 export default Canvas;
