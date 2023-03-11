@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+
+  nginx:
+    image:  nginx
+    hostname:
+    restart: always
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - nginx_volume:/etc/nginx
+    - nginx_ssl_volume:/etc/letsencrypt
+    - nginx_log_volume:/var/log/nginx
+
+  app:
+    image: sticsk/freqsort:amd64
+    restart: always
+    ports:
+    - "3000:3000"
+
+
+volumes:
+  nginx_volume:
+    external: true
+  nginx_ssl_volume:
+    external: true
+  nginx_log_volume:
+    external: true
+
